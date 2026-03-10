@@ -1,0 +1,25 @@
+alesh-patil@alesh-patil-Latitude-3540:/$ ls /etc/systemd/system/go-app.service
+ls: cannot access '/etc/systemd/system/go-app.service': No such file or directory
+alesh-patil@alesh-patil-Latitude-3540:/$ ls /etc/systemd/system/go-app.service
+ls: cannot access '/etc/systemd/system/go-app.service': No such file or directory
+alesh-patil@alesh-patil-Latitude-3540:/$ sudo nano /etc/systemd/system/go-app.service
+[sudo] password for alesh-patil: 
+alesh-patil@alesh-patil-Latitude-3540:/$ sudo systemctl enable go-app
+Created symlink '/etc/systemd/system/multi-user.target.wants/go-app.service' → '/etc/systemd/system/go-app.service'.
+alesh-patil@alesh-patil-Latitude-3540:/$ sudo systemctl start go-app
+alesh-patil@alesh-patil-Latitude-3540:/$ systemctl status go-app
+● go-app.service - Go App Server
+     Loaded: loaded (/etc/systemd/system/go-app.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-03-10 09:23:04 IST; 8s ago
+ Invocation: bc3f3b96289944ed8cff88935009ad29
+   Main PID: 22637 (go-app)
+      Tasks: 6 (limit: 17947)
+     Memory: 1.2M (peak: 2.6M)
+        CPU: 15ms
+     CGroup: /system.slice/go-app.service
+             └─22637 /opt/go-app/go-app
+
+Mar 10 09:23:04 alesh-patil-Latitude-3540 systemd[1]: Started go-app.service - Go App Server.
+Mar 10 09:23:04 alesh-patil-Latitude-3540 go-app[22637]: Server starting on :8080...
+alesh-patil@alesh-patil-Latitude-3540:/$ 
+
