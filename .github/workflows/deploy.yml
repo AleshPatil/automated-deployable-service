@@ -23,24 +23,21 @@ jobs:
           go mod tidy
           go build -o go-app main.go
 
-      - name: Deploy Binary
+      - name: Deploy Application
         run: |
           echo "Deploying application..."
 
-          # Ensure deployment directory exists
           sudo mkdir -p /opt/go-app
 
-          # Copy new binary
-          sudo cp go-app /opt/go-app/go-app
+          # Stop service before replacing binary
+          sudo systemctl stop go-app || true
 
-          # Make executable
+          # Replace binary
+          sudo cp go-app /opt/go-app/go-app
           sudo chmod +x /opt/go-app/go-app
 
-      - name: Restart Service
-        run: |
-          echo "Restarting Go service..."
+          # Start service again
+          sudo systemctl start go-app
 
-          sudo systemctl restart go-app
-
-          echo "Service status:"
+          # Verify service
           sudo systemctl status go-app --no-pager
