@@ -18,7 +18,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func welcomeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hi, Alesh!")
+	fmt.Fprintln(w, "Hi, Alesh!!")
 }
 
 func main() {
@@ -26,7 +26,7 @@ func main() {
 	http.HandleFunc("/welcome", welcomeHandler)
 
 	port := ":8080"
-	fmt.Printf("Server starting on %s...\n", port)
+	fmt.Printf("Server running on %s...\n", port)
 	if err := http.ListenAndServe(port, nil); err != nil {
 		fmt.Printf("Error starting server: %s\n", err)
 	}
