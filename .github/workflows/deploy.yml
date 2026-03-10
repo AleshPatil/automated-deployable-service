@@ -11,29 +11,36 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.24.5"
+          go-version: "1.22"
 
-      - name: Build
+      - name: Build Binary
         run: |
+          echo "Building Go application..."
+          go mod tidy
           go build -v -o go-app main.go
 
-      - name: Deploy to Local Server
+      - name: Deploy Binary
         run: |
-          # Kill old process
-          pkill -f go-app || true
+          echo "Deploying application..."
 
-          # Ensure executable permission
-          chmod +x go-app
+          # Create deployment directory
+          sudo mkdir -p /opt/go-app
 
-          # Start server detached from runner
-          setsid ./go-app > app.log 2>&1 < /dev/null &
+          # Copy binary
+          sudo cp go-app /opt/go-app/go-app
 
-          sleep 2
-          ps aux | grep go-app || true
+          # Set permissions
+          sudo chmod +x /opt/go-app/go-app
 
-          echo "Deployment successful!"
+      - name: Restart Service
+        run: |
+          echo "Restarting service..."
+          sudo systemctl daemon-reload
+          sudo systemctl restart go-app
+          sudo systemctl status go-app --no-pager
